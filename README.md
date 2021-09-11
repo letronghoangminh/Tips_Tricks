@@ -5,7 +5,7 @@
 
 ## Windows
 - `systeminfo`: Hotifx(s) : N/a means the box hasn't updated 
-- Web Server uses WebDave protocol: Use davtest and cadaver to exploit.
+- Web Server uses WebDav protocol: Use davtest and cadaver to exploit.
 
 
 ## Web Security
