@@ -2,6 +2,7 @@
 ## Linux
 - Check users's mails
 - Always try hijacking path if the PATH is writable. 
+- Check port knocking if some ports are filtered at /etc/knockd.conf (depends)
 
 
 ## Windows
