@@ -16,5 +16,7 @@
 - SSTI Jinja 2 https://www.onsecurity.io/blog/server-side-template-injection-with-jinja2/
 - You can include(file_descriptor) in PHP with /dev/fd/
 - Check SSL certificate for more informations
+- Always enumerate on subdomains and virtual hosts
+- Url can be automatically changed to lowercase to bypass filter (GOOGLE.COM -> google.com)
 
 ## Forensics
