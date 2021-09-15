@@ -9,6 +9,7 @@
 - Always check local exploits first
 - `systeminfo`: Hotifx(s) : N/a means the box hasn't updated 
 - Web Server uses WebDav protocol: Use davtest and cadaver to exploit.
+- Migrate to another process if you have an unstable shell.
 
 
 ## Web Security
