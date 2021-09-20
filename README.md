@@ -25,3 +25,6 @@
 - Object.getOwnPropertyNames(obj).get() or .value to get property from object
 
 ## Forensics
+- Image steg: zsteg, stegsolve, steghide, stegdetect
+- Text steg: stegsnow
+- Other steg: binwalk, foremost
