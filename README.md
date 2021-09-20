@@ -4,7 +4,8 @@
 - Always try hijacking path if the PATH is writable. 
 - Check port knocking if some ports are filtered at /etc/knockd.conf (depends)
 - Always patiently check for weird files and folders
-
+- Use ltrace for better anaylysing system calls
+- Exploit for command injection: newline=$'\n' ; bla${newline}/bin/bash${newline}bla or $(printf 'bla\n/bin/bash\nbla')
 
 ## Windows
 - Always check local exploits first
