@@ -1,4 +1,7 @@
 # Tips and Tricks for CTF and HTB boxes
+## General
+- Always remember to run Nmap with UDP and vulnerable scripts
+
 ## Linux
 - Check users's mails
 - Always try hijacking path if the PATH is writable. 
