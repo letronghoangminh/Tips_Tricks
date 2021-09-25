@@ -26,6 +26,7 @@
 - Always enumerate on subdomains and virtual hosts
 - Url can be automatically changed to lowercase to bypass filter (GOOGLE.COM -> google.com)
 - Object.getOwnPropertyNames(obj).get() or .value to get property from object
+- Sometimes unquoted urllib python can be bypassed by double encoding
 
 ## Forensics
 - Image steg: zsteg, stegsolve, steghide, stegdetect
