@@ -9,6 +9,7 @@
 - Always patiently check for weird files and folders
 - Use ltrace for better anaylysing system calls
 - Exploit for command injection: newline=$'\n' ; bla${newline}/bin/bash${newline}bla or $(printf 'bla\n/bin/bash\nbla')
+- VNC is a remote access application and can be accessed with vncviewer
 
 ## Windows
 - Always check local exploits first
