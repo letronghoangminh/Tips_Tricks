@@ -17,6 +17,7 @@
 - Web Server uses WebDav protocol: Use davtest and cadaver to exploit.
 - Migrate to another process if you have an unstable shell.
 - Use odat for Oracle Database, and use --sysdba for make the user privileged
+- Always try snmp-check on Windows boxes
 
 
 ## Web Security
