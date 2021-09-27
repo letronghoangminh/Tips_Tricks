@@ -35,3 +35,5 @@
 - Image steg: zsteg, stegsolve, steghide, stegdetect
 - Text steg: stegsnow
 - Other steg: binwalk, foremost
+- Memory Dump: volatility
+- Sound analysing: Audacity, Sonic Visualizer
