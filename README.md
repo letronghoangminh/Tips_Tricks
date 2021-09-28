@@ -2,6 +2,7 @@
 ## General
 - Always remember to run Nmap with UDP and vulnerable scripts
 - Can't run SYN scan through Proxy and sometimes VPN
+- Scanning UDP is not reliable, always try more scanning with UDP ports
 
 ## Linux
 - Check users's mails
