@@ -2,7 +2,7 @@
 ## General
 - Always remember to run Nmap with UDP and vulnerable scripts
 - Can't run SYN scan through Proxy and sometimes VPN
-- Scanning UDP is not reliable, always try more scanning with UDP ports
+- Scanning UDP is not reliable, always try more scanning with UDP ports (run with --top-ports and -sC or -sV for probing)
 
 ## Linux
 - Check users's mails
@@ -31,6 +31,7 @@
 - Url can be automatically changed to lowercase to bypass filter (GOOGLE.COM -> google.com)
 - Object.getOwnPropertyNames(obj).get() or .value to get property from object
 - Sometimes unquoted urllib python can be bypassed by double encoding
+- If the chall uses child_prcocess and we can modify it's variables, try prototype pollution for modifying shell to bash
 
 ## Forensics
 - Image steg: zsteg, stegsolve, steghide, stegdetect
