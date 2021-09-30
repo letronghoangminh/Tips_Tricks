@@ -1,6 +1,9 @@
 # Tips and Tricks for CTF and HTB boxes
 ## General
 
+## Scripting and Coding
+- Use setuid binary with C code.
+
 ## CVE 
 - Sometimes old version CVEs could work, try them if you don't have other choices.
 
