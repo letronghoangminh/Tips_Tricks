@@ -28,6 +28,8 @@
 - Web Server uses WebDav protocol: Use davtest and cadaver to exploit.
 - Migrate to another process if you have an unstable shell.
 - Always try snmp-check on Windows boxes
+- Sometimes we must manually grant privilege on some locations in order to have our own privileges
+- Change to other user: https://superuser.com/questions/1420850/is-there-a-way-to-switch-user-from-powershell-or-cmd
 
 ## Softwares:
 - VNC is a remote access application and can be accessed with vncviewer
