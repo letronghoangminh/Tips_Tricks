@@ -3,6 +3,7 @@
 
 ## Scripting and Coding
 - Use setuid binary with C code.
+- Look for source code on Github of open source softwares and their "Security annoucements", try to enumerate the version and released date.
 
 ## CVE 
 - Sometimes old version CVEs could work, try them if you don't have other choices.
