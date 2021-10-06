@@ -12,6 +12,7 @@
 - Nmap: Scanning UDP is not reliable, always try more scanning with UDP ports (run with --top-ports and -sC or -sV for probing)
 - Nmap: Always remember to run Nmap with UDP and vulnerable scripts
 - Nmap: Can't run SYN scan through Proxy and sometimes VPN
+- Nmap: Some port can't be detected but run important service, remember to check all of them on Internet
 - WPScan: only use enumerate all plugins or all themes at once, not both at the same time. 
 
 ## Linux
