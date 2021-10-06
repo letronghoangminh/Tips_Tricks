@@ -32,6 +32,11 @@
 - Always try snmp-check on Windows boxes
 - Sometimes we must manually grant privilege on some locations in order to have our own privileges
 - Change to other user: https://superuser.com/questions/1420850/is-there-a-way-to-switch-user-from-powershell-or-cmd
+- wsman and msrm to remote login on Windows
+
+## Active Directory
+- Use BloodHound and SharpHound to gather information about AD, mark some users as Owned then use "Shortest Path from Owned Principals".
+- Dsync attack to get domain admins password and pass the hash -> Forest box in HTB
 
 ## Softwares:
 - VNC is a remote access application and can be accessed with vncviewer
