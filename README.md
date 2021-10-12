@@ -1,9 +1,12 @@
 # Tips and Tricks for CTF and HTB boxes
-## General
+## Enumeration
+- Look for source code on Github of open source softwares and their "Security annoucements", try to enumerate the version and released date.
+- Use md5 of library file to looks up date or version on VirusTotal
+- Looks for security fixes in the next version of current version
 
 ## Scripting and Coding
 - Use setuid binary with C code.
-- Look for source code on Github of open source softwares and their "Security annoucements", try to enumerate the version and released date.
+
 
 ## CVE 
 - Sometimes old version CVEs could work, try them if you don't have other choices.
