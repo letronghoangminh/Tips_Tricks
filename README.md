@@ -3,6 +3,12 @@
 - Look for source code on Github of open source softwares and their "Security annoucements", try to enumerate the version and released date.
 - Use md5 of library file to looks up date or version on VirusTotal
 - Looks for security fixes in the next version of current version
+- Keep and eye on little detail
+- Vhost maybe use on both 80 and 443
+- Take any domains you see into /etc/hosts
+- Check SSL certificate for more informations
+- Always enumerate on subdomains and virtual hosts
+
 
 ## Scripting and Coding
 - Use setuid binary with C code.
@@ -51,8 +57,6 @@
 - Bypass eval blacklist a-zA-Z https://ironhackers.es/en/tutoriales/saltandose-waf-ejecucion-de-codigo-php-sin-letras/
 - SSTI Jinja 2 https://www.onsecurity.io/blog/server-side-template-injection-with-jinja2/
 - You can include(file_descriptor) in PHP with /dev/fd/
-- Check SSL certificate for more informations
-- Always enumerate on subdomains and virtual hosts
 - Url can be automatically changed to lowercase to bypass filter (GOOGLE.COM -> google.com), even schemes like HtTp or FiLe
 - Object.getOwnPropertyNames(obj).get() or .value to get property from object in Javascript
 - Sometimes unquoted urllib python can be bypassed by double encoding
