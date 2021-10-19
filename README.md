@@ -23,6 +23,7 @@
 - Nmap: Can't run SYN scan through Proxy and sometimes VPN
 - Nmap: Some port can't be detected but run important service, remember to check all of them on Internet
 - WPScan: only use enumerate all plugins or all themes at once, not both at the same time. 
+- Scanning CMS: magescan for Magento, droopescan for Wordpress, SilverStripe and Drupal, wpscan for Wordpress
 
 ## Linux
 - Check users's mails
