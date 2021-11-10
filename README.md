@@ -33,6 +33,7 @@
 - Use ltrace for better anaylysing system calls
 - Exploit for shell command injection: newline=$'\n' ; bla${newline}/bin/bash${newline}bla or $(printf 'bla\n/bin/bash\nbla')
 - Owner and group owner and even suid bit of a binary doesn't change after transferring through internet and can be used to tampered with suid binary
+- Use apport-unpack to extract crashed coredump to file system 
 
 ## Windows
 - Always check local exploits first
