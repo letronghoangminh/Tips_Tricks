@@ -46,6 +46,7 @@
 - wsman and msrm to remote login on Windows
 - Check for installed programs in Program Files or Program Files x86
 - Can use the obfuscator release of winPEAS to bypass some AV
+- `net user administrator password` to change admin password if we have a local admin account
 
 ## Active Directory
 - Use BloodHound and SharpHound to gather information about AD, mark some users as Owned then use "Shortest Path from Owned Principals".
