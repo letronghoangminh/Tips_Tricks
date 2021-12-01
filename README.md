@@ -8,15 +8,8 @@
 - Take any domains you see into /etc/hosts
 - Check SSL certificate for more informations
 - Always enumerate on subdomains and virtual hosts
-- Run gobuster with php extension
+- Run gobuster with php,html,zip,txt extension
 
-
-## Scripting and Coding
-- Use setuid binary with C code.
-
-
-## CVE 
-- Sometimes old version CVEs could work, try them if you don't have other choices.
 
 ## Scanning
 - Nmap: Scanning UDP is not reliable, always try more scanning with UDP ports (run with --top-ports and -sC or -sV for probing)
@@ -76,6 +69,7 @@
   - `{{''|attr('\x5f\x5fclass\x5f\x5f')|attr('\x5f\x5f\x6d\x72\x6f\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')(1)|attr('\x5f\x5fsubclasses\x5f\x5f')()|attr('\x5f\x5fgetitem\x5f\x5f')(132)|attr('\x5f\x5finit\x5f\x5f')|attr('\x5f\x5fglobals\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fbuiltins\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fimport\x5f\x5f')('\x6f\x73')|attr('\x70\x6f\x70\x65\x6e')('id')|attr('read')()}}`
   - `{{ ''.__class__.__mro__[1].__subclasses__()[408]("id", shell=True, stdout=-1).communicate() }}`
 - Remember to hunt to noSQLi when facing to a login form 
+- Good sqli article: https://websec.wordpress.com/2010/03/19/exploiting-hard-filtered-sql-injections/
 
 
 ## Forensics
