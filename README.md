@@ -53,6 +53,7 @@
 - VNC is a remote access application and can be accessed with vncviewer
 - Use odat for Oracle Database, and use --sysdba for make the user privileged
 - Config for IKE VPN -> Conceal box in HTB.
+- lxd containers are under /var/lib/lxc directory
 
 
 ## Web Security
