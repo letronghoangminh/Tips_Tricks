@@ -37,7 +37,7 @@
 - Migrate to another process if you have an unstable shell.
 - Always try snmp-check on Windows boxes
 - Sometimes we must manually grant privilege on some locations in order to have our own privileges
-- Change to other user: https://superuser.com/questions/1420850/is-there-a-way-to-switch-user-from-powershell-or-cmd
+- Change to other user: https://superuser.com/questions/1420850/is-there-a-way-to-switch-user-from-powershell-or-cmd, or `New-PSSession -Credential $cred | Enter-PSSession` with computername\username
 - wsman and msrm to remote login on Windows
 - Check for installed programs in Program Files or Program Files x86
 - Can use the obfuscator release of winPEAS to bypass some AV
