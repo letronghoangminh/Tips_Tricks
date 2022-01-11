@@ -56,6 +56,7 @@
 - Use odat for Oracle Database, and use --sysdba for make the user privileged
 - Config for IKE VPN -> Conceal box in HTB.
 - lxd containers are under /var/lib/lxc directory
+- https://quipqiup.com/ testing bunch of ciphers
 
 
 ## Web Security
