@@ -9,6 +9,7 @@
 - Check SSL certificate for more informations
 - Always enumerate on subdomains and virtual hosts
 - Run gobuster with php,html,zip,txt extension
+- Always use newest version of scripts
 
 
 ## Scanning
