@@ -47,6 +47,7 @@
 - Pass the hash must go with username: `psexec -hashes NThash:LMhash Administrator@10.10.10.63`
 - Check the arch of shell process, some PE vectors can only be performed on 64 bits shell
 - Check for which services user can start https://0xdf.gitlab.io/2020/04/25/htb-control.html, Ippsec has good video about services in Control box
+- Runas improved https://github.com/antonioCoco/RunasCs
 
 ## Active Directory
 - Use BloodHound and SharpHound to gather information about AD, mark some users as Owned then use "Shortest Path from Owned Principals".
