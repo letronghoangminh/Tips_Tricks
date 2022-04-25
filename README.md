@@ -30,6 +30,7 @@
 - Owner and group owner and even suid bit of a binary doesn't change after transferring through internet and can be used to tampered with suid binary
 - Use apport-unpack to extract crashed coredump to file system 
 - Check parent directory's permission of files that we don't have permission
+- NFS mount: localhost != 127.0.0.1
 
 ## Windows
 - Always check local exploits first
