@@ -87,3 +87,29 @@
 - Other steg: binwalk, foremost
 - Memory Dump: volatility
 - Sound analysing: Audacity, Sonic Visualizer
+
+## Checklists
+### Web
+- nikto
+- nmap
+- directory bruteforces
+- vhosts/ subdomains bruteforces
+- parameter fuzzing
+- files fuzzing
+- Login page: SQL Injection, NoSQL Injection, LDAP Injection
+- Vulnerable version of web servers
+- Cookies, session, response headers,...
+- JS, CSS files
+
+### FTP
+- Anonymous login
+- Vulnerable version
+- Writing files
+
+### SMB
+- Enum4linux
+- SMBMAP 
+- SMBClient
+- Vulnerable version
+- Writing files
+- SCF, URL
