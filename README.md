@@ -40,12 +40,8 @@
 - Always try snmp-check on Windows boxes
 - Sometimes we must manually grant privilege on some locations in order to have our own privileges
 - Change to other user: https://superuser.com/questions/1420850/is-there-a-way-to-switch-user-from-powershell-or-cmd, or `New-PSSession -Credential $cred | Enter-PSSession` with computername\username (remote managers)
-- wsman and msrm to remote login on Windows
 - Check for installed programs in Program Files or Program Files x86
 - Can use the obfuscator release of winPEAS to bypass some AV
-- `net user administrator password` to change admin password if we have a local admin account
-- Juicy Potato still works with some versions of Windows 10
-- Pass the hash must go with username: `psexec -hashes NThash:LMhash Administrator@10.10.10.63`
 - Check the arch of shell process, some PE vectors can only be performed on 64 bits shell
 - Check for which services user can start https://0xdf.gitlab.io/2020/04/25/htb-control.html, Ippsec has good video about services in Control box
 - Runas improved https://github.com/antonioCoco/RunasCs
@@ -54,9 +50,11 @@
 ## Active Directory
 - Use BloodHound and SharpHound to gather information about AD, mark some users as Owned then use "Shortest Path from Owned Principals".
 - Dsync attack to get domain admins password and pass the hash -> Forest box in HTB
+- Try old techniques with new creds
+- Patiently try all the techniques for exploiting from PayloadAllTheThings
+- Enumerate non-AD services paytiently
 
 ## Softwares:
-- VNC is a remote access application and can be accessed with vncviewer
 - Use odat for Oracle Database, and use --sysdba for make the user privileged
 - Config for IKE VPN -> Conceal box in HTB.
 - lxd containers are under /var/lib/lxc directory
@@ -87,29 +85,3 @@
 - Other steg: binwalk, foremost
 - Memory Dump: volatility
 - Sound analysing: Audacity, Sonic Visualizer
-
-## Checklists
-### Web
-- nikto
-- nmap
-- directory bruteforces
-- vhosts/ subdomains bruteforces
-- parameter fuzzing
-- files fuzzing
-- Login page: SQL Injection, NoSQL Injection, LDAP Injection
-- Vulnerable version of web servers
-- Cookies, session, response headers,...
-- JS, CSS files
-
-### FTP
-- Anonymous login
-- Vulnerable version
-- Writing files
-
-### SMB
-- Enum4linux
-- SMBMAP 
-- SMBClient
-- Vulnerable version
-- Writing files
-- SCF, URL
