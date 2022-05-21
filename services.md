@@ -11,6 +11,7 @@
 ## SSH
 - Before Openssh 7.2, can enumerate usernames
 - Debian old version can be exploited by creating id_rsa files with public keys
+- Try usernames as passwords
 - Always brute forcing with usernames
 
 ## HTTP
@@ -20,9 +21,22 @@
 - Vhost, subdomain fuzzing
 - Inspecting sources
 - Inspecting HTTP headers
+- Find cms version, cms scanning, public exploits
 
 ## SMB
 - Try with smbclient and smbmap
 - Switching min protocol
 - Brute force with usernames
 - Look for vulnerable version
+- enum4linux
+
+## IMAP, POP
+- Can enum usernames
+- Try with new creds 
+
+## SMTP
+- For some exloits
+
+## DNS
+- Zone transfer
+- Finding records
