@@ -22,6 +22,10 @@
 - Inspecting sources
 - Inspecting HTTP headers
 - Find cms version, cms scanning, public exploits
+- Login page: SQL Injection, NoSQL Injection, LDAP Injection
+- Vulnerable version of web servers
+- Cookies, session, response headers,...
+- JS, CSS files
 
 ## SMB
 - Try with smbclient and smbmap
