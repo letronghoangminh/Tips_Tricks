@@ -1,0 +1,94 @@
+{
+  "main": {
+    "id": "9b7f4ed4e63d85e7",
+    "type": "split",
+    "children": [
+      {
+        "id": "3420066519202097",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "PG_writeups.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "cab24d9a93000d7d",
+    "type": "split",
+    "children": [
+      {
+        "id": "2614054cc2660526",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "500ec4148f05f727",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "339c21368e3de0b6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "2687aad843939735",
+    "type": "split",
+    "children": [
+      {
+        "id": "38392a19c36e6d1f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6551d0c034007432",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "PG_writeups.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "3420066519202097",
+  "lastOpenFiles": [
+    "PG_writeups.md",
+    "services.md"
+  ]
+}

