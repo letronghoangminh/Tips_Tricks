@@ -68,7 +68,7 @@
 - Url can be automatically changed to lowercase to bypass filter (GOOGLE.COM -> google.com), even schemes like HtTp or FiLe
 - Object.getOwnPropertyNames(obj).get() or .value to get property from object in Javascript
 - Sometimes unquoted urllib python can be bypassed by double encoding
-- If the chall uses child_prcocess and we can modify it's variables, try prototype pollution for modifying shell variable to 'bash' (thanks nhoc n3mo)
+- If the chall uses child_prcocess and we can modify it's variables, try prototype pollution for modifying shell variable to 'bash'
 - Some useful payloads for SSTI Jinja2 with Python3:
   - `{{self.__init__.__globals__.__builtins__.__import__('os')}}`
   - `{{''.__class__.mro()[1].__subclasses__()[132].__init__.__globals__.__builtins__.__import__('os').popen('id').read()}}`
